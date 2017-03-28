@@ -3,7 +3,6 @@
 import * as chai from 'chai';
 let expect = chai.expect;
 import * as sinon from 'sinon';
-import { UserClient } from './models/user-client';
 
 import SinonExpectation = sinon.SinonExpectation;
 import SinonMock = sinon.SinonMock;

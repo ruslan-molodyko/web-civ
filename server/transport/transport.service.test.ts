@@ -75,7 +75,7 @@ describe('Transport service test', () => {
         let message1: MessageInterface = <MessageInterface>{
             type: 0,
             sourceClient: client1,
-            targetClient: client2
+            targetClient: client2,
             message: {some: 'object'}
         };
 
@@ -117,7 +117,7 @@ describe('Transport service test', () => {
 
         let message1: MessageInterface = <MessageInterface>{
             type: 0,
-            sourceClient: client1
+            sourceClient: client1,
             message: {some: 'object'}
         };
 
@@ -139,19 +139,22 @@ describe('Transport service test', () => {
             message: {other: 'object'}
         };
 
-        let subject = new Subject();
+        let subject = new Subject(),
+            connection1: Connection,
+            connection2: Connection 
+        ;
 
         let connection3: Connection = WebSocket.connect(url, {}, () => {
             connection3.send(JSON.stringify(message3));
             connection3.on('text', (text: string) => { 
                 subject.next(text);
             });
-            let connection2: Connection = WebSocket.connect(url, {}, () => {
+            connection2 = WebSocket.connect(url, {}, () => {
                 connection2.send(JSON.stringify(message2));
                 connection2.on('text', (text: string) => { 
                     subject.next(text);
                 });
-                let connection1: Connection = WebSocket.connect(url, {}, () => {
+                connection1 = WebSocket.connect(url, {}, () => {
                     connection1.send(JSON.stringify(message3), () => {
                         listener.broadcast(messageBroadCast);
                     });
